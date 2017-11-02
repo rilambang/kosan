@@ -13,17 +13,15 @@ import {
 
 export default class Penjaga extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       datapenjaga: [],
-      webtoken: ''
     }
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('token', (error, result) => {
-      //console.log("AsyncStorage")
+    AsyncStorage.getItem('data', (error, result) => {
       if (result) {
         this.setState({
           webtoken: result
@@ -60,14 +58,17 @@ export default class Penjaga extends Component {
       <Container>
         <Content padder>
           <List>
+            <Button block info onPress={() => this.props.navigation.navigate("Penjagacreate")} >
+              <Text >Tambah</Text>
+            </Button>
             <Text style={{ color: '#000', fontSize: 20, textAlign: "center" }}>Nama Penjaga</Text>
             {
               this.state.datapenjaga.map((item, index) => (
-                <Card>
+                <Card key={item._id}>
 
-                  {/*<Button block info onPress={() => this.props.navigation.navigate("PenggunaDetail", { idPengguna: item._id })} >*/}
-                  <Text >{item.NamaPenjaga}</Text>
-                  {/*</Button>*/}
+                  <Button block info onPress={() => this.props.navigation.navigate("Penjagadetail", { idpenjaga: item._id })} >
+                    <Text >{item.NamaPenjaga}</Text>
+                  </Button>
 
                 </Card>
               ))

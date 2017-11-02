@@ -24,11 +24,7 @@ export default class ContentHome extends Component {
           {/*<Image
              style = {styles.logo}
              source={require('../images/ic_githug.png')} />*/}
-          <Text style={styles.titleApp}>Selamat Datang</Text><Button
-            transparent
-            onPress={() => this.props.navigation.navigate("Penjaga")}>
-            <Icon name="menu" />
-          </Button>
+          <Text style={styles.titleApp}>Selamat Datang</Text>
         </View>
       </View>
     );

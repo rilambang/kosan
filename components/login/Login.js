@@ -81,7 +81,7 @@ export default class HomeLogin extends Component {
     })
       .then(response => response.json())
       .then((token) => {
-        AsyncStorage.setItem('token', JSON.stringify(token.token));
+        AsyncStorage.setItem('data', token.token);
         if (token.token != undefined) {
           //console.log(token.token)
           Alert.alert(
@@ -92,7 +92,6 @@ export default class HomeLogin extends Component {
               { text: "OK", onPress: () => this.props.navigation.navigate('Home') },
             ]
           )
-          this.props.navigation.navigate('Home')
         }
         else {
           //console.log(token.token)
