@@ -64,7 +64,21 @@ export default class penjagaedit extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={styles.container}>
+                <Header style={{ backgroundColor: "#1b1b2b" }}>
+                    <Left>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate("Penjagadetail", { idpenjaga: this.state.datapenjaga._id })} key={this.state.datapenjaga._id}>
+                            <Icon name="arrow-back" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>PENJAGAEdit</Text>
+                    </Body>
+                    <Right>
+                    </Right>
+                </Header>
                 <Content padder>
                     <Card>
                         <CardItem>
@@ -102,43 +116,55 @@ export default class penjagaedit extends Component {
     }
 
     editpenjaga = () => {
-        AsyncStorage.getItem('data', (error, result) => {
-            if (result) {
-                this.setState({
-                    webtoken: result
-                });
-                console.log(this.state.webtoken)
-                return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/" + this.state.idpenjaga + "?token=" + this.state.webtoken, {
-                    method: 'PUT',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        KdPenjaga: this.state.KdPenjaga,
-                        KdKos: this.state.KdKos,
-                        NamaPenjaga: this.state.NamaPenjaga,
-                        Alamat: this.state.Alamat,
-                        NoHp: this.state.NoHp,
-                        JenisKelamin: this.state.JenisKelamin,
-                        KategoriKos: this.state.KategoriKos,
+        if (this.state.KategoriKos == "" || this.state.KdPenjaga == "" || this.state.KdKos == "" ||
+            this.state.NamaPenjaga == "" || this.state.Alamat == "" || this.state.JenisKelamin == "" ||
+            this.state.NoHp == "") {
+            Alert.alert(
+                "Peringatan!",
+                "Data Tidak Boleh Kosong",
+                [
+                    { text: "OK", onPress: () => this.props.navigation.navigate('Penjagaedit', { idpenjaga: this.state.datapenjaga._id }) },
+                ]
+            )
+        } else {
+            AsyncStorage.getItem('data', (error, result) => {
+                if (result) {
+                    this.setState({
+                        webtoken: result
+                    });
+                    console.log(this.state.webtoken)
+                    return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/" + this.state.idpenjaga + "?token=" + this.state.webtoken, {
+                        method: 'PUT',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            KdPenjaga: this.state.KdPenjaga,
+                            KdKos: this.state.KdKos,
+                            NamaPenjaga: this.state.NamaPenjaga,
+                            Alamat: this.state.Alamat,
+                            NoHp: this.state.NoHp,
+                            JenisKelamin: this.state.JenisKelamin,
+                            KategoriKos: this.state.KategoriKos,
+                        })
                     })
-                })
-                    .then(response => response.json())
-                    .then(
-                    Alert.alert(
-                        "Edit Data penjaga",
-                        "Suksess",
-                        [
-                            { text: "OK", onPress: () => this.props.navigation.navigate('Penjagadetail', { idpenjaga: this.state.datapenjaga._id }) },
-                        ]
-                    )
-                    )
-            }
-            else if (error) {
-                console.log('eror' + error)
-            }
-        })
+                        .then(response => response.json())
+                        .then(
+                        Alert.alert(
+                            "Edit Data penjaga",
+                            "Suksess",
+                            [
+                                { text: "OK", onPress: () => this.props.navigation.navigate('Penjagadetail', { idpenjaga: this.state.datapenjaga._id }) },
+                            ]
+                        )
+                        )
+                }
+                else if (error) {
+                    console.log('eror' + error)
+                }
+            })
+        }
     }
 
     handleKdPenjaga = (text) => {
@@ -165,3 +191,13 @@ export default class penjagaedit extends Component {
 
 }
 
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 25,
+        backgroundColor: '#ffffff',
+    },
+    text: {
+        fontSize: 15,
+        fontWeight: 'bold',
+    }
+})

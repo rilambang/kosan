@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View,AsyncStorage, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, AsyncStorage, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup,
     Item, Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -22,7 +22,21 @@ export default class PenjagaCreate extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={styles.container}>
+                <Header style={{ backgroundColor: "#1b1b2b" }}>
+                    <Left>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate("Penjaga")}>
+                            <Icon name="arrow-back" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>PENJAGATambah</Text>
+                    </Body>
+                    <Right>
+                    </Right>
+                </Header>
                 <Content padder>
                     <Card>
                         <CardItem>
@@ -47,7 +61,7 @@ export default class PenjagaCreate extends Component {
                                         <Text style={{ fontSize: 20 }}>Kategori Kos </Text>
                                         <TextInput defaultValue={this.state.KategoriKos} onChangeText={this.handleKategoriKos}></TextInput>
                                         <Text>{"\n"}</Text>
-                                        <Button primary onPress={this.createpenjaga}><Text>Update</Text></Button>
+                                        <Button primary onPress={this.createpenjaga}><Text>Simpan</Text></Button>
                                     </View>
 
                                 </List>
@@ -60,61 +74,74 @@ export default class PenjagaCreate extends Component {
     }
 
     createpenjaga = () => {
-        AsyncStorage.getItem('data', (error, result) => {
-            if (result) {
-                this.setState({
-                    webtoken: result
-                });
-                console.log(this.state.webtoken)
-                fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
-                    method: "GET",
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        this.setState({
-                            dataPenjaga: data
-                        });
-                        //debugger;
-                        //console.log(this.state.dataPenjaga);
-                        //console.log(this.state.dataDokter[0].NamaDokter);
+        if (this.state.KategoriKos == "" || this.state.KdPenjaga == "" || this.state.KdKos == "" ||
+            this.state.NamaPenjaga == "" || this.state.Alamat == "" || this.state.JenisKelamin == "" ||
+            this.state.NoHp == "") {
+            Alert.alert(
+                "Data Kosong",
+                "Isi Semua Data",
+                [
+                    { text: "OK" },
+                ]
+            )
+        } else {
 
+            AsyncStorage.getItem('data', (error, result) => {
+                if (result) {
+                    this.setState({
+                        webtoken: result
+                    });
+                    console.log(this.state.webtoken)
+                    fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
+                        method: "GET",
                     })
-                    .catch((error) => {
-                        //console.log(error);
+                        .then((response) => response.json())
+                        .then((data) => {
+                            this.setState({
+                                dataPenjaga: data
+                            });
+                            //debugger;
+                            //console.log(this.state.dataPenjaga);
+                            //console.log(this.state.dataDokter[0].NamaDokter);
+
+                        })
+                        .catch((error) => {
+                            //console.log(error);
+                        })
+                }
+                else if (error) {
+                    console.log('eror' + error)
+                }
+
+                return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
+                    method: 'POST',
+
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        KdKos: this.state.KdKos,
+                        Alamat: this.state.Alamat,
+                        NoHp: this.state.NoHp,
+                        KdPenjaga: this.state.KdPenjaga,
+                        JenisKelamin: this.state.JenisKelamin,
+                        KategoriKos: this.state.KategoriKos,
+                        NamaPenjaga: this.state.NamaPenjaga,
                     })
-            }
-            else if (error) {
-                console.log('eror' + error)
-            }
-
-            return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
-                method: 'POST',
-
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    KdKos: this.state.KdKos,
-                    Alamat: this.state.Alamat,
-                    NoHp: this.state.NoHp,
-                    KdPenjaga: this.state.KdPenjaga,
-                    JenisKelamin: this.state.JenisKelamin,
-                    KategoriKos: this.state.KategoriKos,
-                    NamaPenjaga: this.state.NamaPenjaga,
                 })
+                    .then(response => response.json())
+                    .then(
+                    Alert.alert(
+                        "Create Provinsoi",
+                        "Sukses",
+                        [
+                            { text: "OK", onPress: () => this.props.navigation.navigate('Penjaga') },
+                        ]
+                    )
+                    )
             })
-                .then(response => response.json())
-                .then(
-                Alert.alert(
-                    "Create Provinsoi",
-                    "Sukses",
-                    [
-                        { text: "OK", onPress: () => this.props.navigation.navigate('Penjaga') },
-                    ]
-                )
-                )
-        })
+        }
     }
 
     handleKdPenjaga = (text) => {
@@ -145,12 +172,7 @@ export default class PenjagaCreate extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        marginTop: 3,
-        backgroundColor: '#d9f9b1',
-        alignItems: 'center',
-    },
-    text: {
-        color: '#4f603c'
+        marginTop: 25,
+        backgroundColor: '#ffffff',
     }
 })

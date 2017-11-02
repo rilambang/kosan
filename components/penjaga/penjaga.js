@@ -55,18 +55,33 @@ export default class Penjaga extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={styles.container}>
+        <Header style={{ backgroundColor: "#1b1b2b" }}>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate("Home")}>
+              <Icon name="arrow-back" />
+            </Button>
+          </Left>
+          <Body>
+            <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>PENJAGA</Text>
+          </Body>
+          <Right>
+            <Button transparent onPress={() => this.props.navigation.navigate("Penjagacreate")} >
+              <Icon style={{fontSize:30}} name="paper" />
+            </Button>
+          </Right>
+        </Header>
         <Content padder>
           <List>
-            <Button block info onPress={() => this.props.navigation.navigate("Penjagacreate")} >
-              <Text >Tambah</Text>
-            </Button>
-            <Text style={{ color: '#000', fontSize: 20, textAlign: "center" }}>Nama Penjaga</Text>
+            <Text style={{ color: '#000', marginTop:25, fontSize: 20,fontWeight:'bold', textAlign: "center" }}>Nama Penjaga</Text>
+            <Text/>
             {
               this.state.datapenjaga.map((item, index) => (
                 <Card key={item._id}>
 
-                  <Button block info onPress={() => this.props.navigation.navigate("Penjagadetail", { idpenjaga: item._id })} >
+                  <Button block light onPress={() => this.props.navigation.navigate("Penjagadetail", { idpenjaga: item._id })} >
                     <Text >{item.NamaPenjaga}</Text>
                   </Button>
 
@@ -82,10 +97,8 @@ export default class Penjaga extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1B8057',
+    marginTop: 25,
+    backgroundColor: '#cfe1fe',
   },
   logoConten: {
     flexGrow: 1,

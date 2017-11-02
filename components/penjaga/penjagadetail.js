@@ -47,46 +47,60 @@ export default class Penjagadetail extends Component {
     }
     render() {
         return (
-            <Container>
+            <Container style={styles.container}>
+                <Header style={{ backgroundColor: "#1b1b2b" }}>
+                    <Left>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate("Penjaga")}>
+                            <Icon name="arrow-back" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>PENJAGADetail</Text>
+                    </Body>
+                    <Right>
+                    </Right>
+                </Header>
                 <Content padder>
                     <Separator bordered>
-                        <Text>Kode Penjaga</Text>
+                        <Text  style={styles.text}>Kode Penjaga</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datapenjaga.KdPenjaga}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text>Kode Kos</Text>
+                        <Text  style={styles.text}>Kode Kos</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datapenjaga.KdKos}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text>Nama Penjaga</Text>
+                        <Text  style={styles.text}>Nama Penjaga</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datapenjaga.NamaPenjaga}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text>Jenis Kelamin</Text>
+                        <Text  style={styles.text}>Jenis Kelamin</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datapenjaga.JenisKelamin}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text>Kategori Kos</Text>
+                        <Text  style={styles.text}>Kategori Kos</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datapenjaga.KategoriKos}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text>No Hp</Text>
+                        <Text  style={styles.text}>No. Handphone</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datapenjaga.NoHp}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text>Alamat</Text>
+                        <Text  style={styles.text}>Alamat</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datapenjaga.Alamat}</Text>
@@ -151,3 +165,14 @@ export default class Penjagadetail extends Component {
         })
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 25,
+        backgroundColor: '#ffffff',
+    },
+    text: {
+        fontSize: 15,
+        fontWeight: 'bold',
+    }
+})
