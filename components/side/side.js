@@ -40,7 +40,7 @@ export default class Side extends React.Component {
     }
 
     Logout = () => {
-        AsyncStorage.removeItem('token', (error, result) => {
+        AsyncStorage.removeItem('data', (error, result) => {
             Alert.alert(
 
                 "Logout",

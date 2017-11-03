@@ -69,7 +69,7 @@ export default class Penjaga extends Component {
           </Body>
           <Right>
             <Button transparent onPress={() => this.props.navigation.navigate("Penjagacreate")} >
-              <Icon style={{fontSize:30}} name="paper" />
+              <Icon style={{fontSize:30}} name="add" />
             </Button>
           </Right>
         </Header>
