@@ -32,7 +32,7 @@ export default class PenjagaCreate extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>PENJAGATambah</Text>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>TAMBAHPenjaga</Text>
                     </Body>
                     <Right>
                     </Right>

@@ -74,7 +74,7 @@ export default class penjagaedit extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>PENJAGAEdit</Text>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>EDITPenjaga</Text>
                     </Body>
                     <Right>
                     </Right>

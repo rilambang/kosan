@@ -5,16 +5,25 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  AsyncStorage
 } from 'react-native';
 
-import Login from './components/login/Login.js';
+import Login from './components/login/index.js';
 import Home from './components/content/index.js';
 
 
-const Application = StackNavigator({
+const ApplicationLogin = StackNavigator({
   Login: { screen: Login },
+}, {
+    navigationOptions: {
+      header: false,
+    }
+  })
+
+const ApplicationHome = StackNavigator({
   Home: { screen: Home },
+  Login: { screen: Login },
 }, {
     navigationOptions: {
       header: false,
@@ -22,6 +31,22 @@ const Application = StackNavigator({
   })
 
 export default class App extends Component {
+  state = {
+    'data': ''
+  }
+  componentDidMount = () => AsyncStorage.getItem('data', (error, token) => {
+    if (token) {
+      this.setState({
+        token: token
+      });
+      console.log(this.state.token)
+    }
+    else if (error) {
+      console.log('eror' + error)
+    }
+  })
+    .then((token) => this.setState({ 'data': token }))
+
   async componentWillMount() {
 
     await Expo.Font.loadAsync({
@@ -34,8 +59,15 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <Application />
-    );
+    if (this.state.token != null || this.state.token != undefined || this.state.token != "") {
+      return (
+        <ApplicationHome />
+      );
+    } else {
+      return (
+        <ApplicationLogin />
+      );
+    }
+
   }
 }

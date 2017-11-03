@@ -57,7 +57,7 @@ export default class Penjagadetail extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>PENJAGADetail</Text>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>DETAILPenjaga</Text>
                     </Body>
                     <Right>
                     </Right>
