@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View, AsyncStorage, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, AsyncStorage, Picker, PickerItem, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup,
     Item, Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -47,19 +47,28 @@ export default class PenjagaCreate extends Component {
                                     <View >
                                         <H1>Data penjaga{"\n"}</H1>
                                         <Text style={{ fontSize: 20 }}>Kode Penjaga </Text>
-                                        <TextInput defaultValue={this.state.KdPenjaga} onChangeText={this.handleKdPenjaga}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdPenjaga} onChangeText={this.handleKdPenjaga}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Nama penjaga </Text>
-                                        <TextInput defaultValue={this.state.NamaPenjaga} onChangeText={this.handleNamaPenjaga}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>Jenis Kelamin </Text>
-                                        <TextInput defaultValue={this.state.JenisKelamin} onChangeText={this.handleJenisKelamin}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NamaPenjaga} onChangeText={this.handleNamaPenjaga}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Alamat </Text>
-                                        <TextInput defaultValue={this.state.Alamat} onChangeText={this.handleAlamat}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.Alamat} onChangeText={this.handleAlamat}></TextInput>
                                         <Text style={{ fontSize: 20 }}>No Hp </Text>
-                                        <TextInput defaultValue={this.state.NoHp} onChangeText={this.handleNoHp}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NoHp} onChangeText={this.handleNoHp}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kategori Kos </Text>
-                                        <TextInput defaultValue={this.state.KategoriKos} onChangeText={this.handleKategoriKos}></TextInput>
+                                        <Picker selectedValue={this.state.KategoriKos} onValueChange={this.handleKategoriKos}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Kelas1" value="Kelas1" />
+                                            <Picker.Item label="Kelas2" value="Kelas2" />
+                                            <Picker.Item label="Kelas3" value="Kelas3" />
+                                        </Picker>
+                                        <Text style={{ fontSize: 20 }}>Jenis Kelamin </Text>
+                                        <Picker selectedValue={this.state.JenisKelamin} onValueChange={this.handleJenisKelamin}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Laki-laki" value="Laki-laki" />
+                                            <Picker.Item label="Perempuan" value="Perempuan" />
+                                        </Picker>
                                         <Text>{"\n"}</Text>
                                         <Button primary onPress={this.createpenjaga}><Text>Simpan</Text></Button>
                                     </View>
@@ -69,7 +78,7 @@ export default class PenjagaCreate extends Component {
                         </CardItem>
                     </Card>
                 </Content>
-            </Container>
+            </Container >
         )
     }
 

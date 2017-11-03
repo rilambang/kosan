@@ -59,13 +59,13 @@ export default class App extends Component {
   }
 
   render() {
-    if (this.state.token != null || this.state.token != undefined || this.state.token != "") {
+    if (this.state.token == null || this.state.token == undefined || this.state.token == "") {
       return (
-        <ApplicationHome />
+        <ApplicationLogin />
       );
     } else {
       return (
-        <ApplicationLogin />
+        <ApplicationHome />
       );
     }
 
