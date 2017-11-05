@@ -13,7 +13,7 @@ export default class fiturkosdetail extends Component {
         this.state = {
             datafiturkos: "",
             TV: "",
-            Kulkas:"",
+            Kulkas: "",
             idfiturkos: this.props.navigation.state.params.idfiturkos
         }
     }
@@ -91,10 +91,22 @@ export default class fiturkosdetail extends Component {
                         <Text>{this.state.datafiturkos.KdKos}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text style={styles.text}>Internet</Text>
+                        <Text style={styles.text}>Biaya Internet</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datafiturkos.Internet}</Text>
+                        <Text>Rp. {this.state.datafiturkos.Internet}</Text>
+                    </ListItem>
+                    <Separator bordered>
+                        <Text style={styles.text}>Biaya Air</Text>
+                    </Separator>
+                    <ListItem >
+                        <Text>Rp. {this.state.datafiturkos.Air}</Text>
+                    </ListItem>
+                    <Separator bordered>
+                        <Text style={styles.text}>Biaya Listrik</Text>
+                    </Separator>
+                    <ListItem >
+                        <Text>Rp. {this.state.datafiturkos.Listrik}</Text>
                     </ListItem>
                     <Separator bordered>
                         <Text style={styles.text}>Kamar Mandi</Text>
@@ -113,18 +125,6 @@ export default class fiturkosdetail extends Component {
                     </Separator>
                     <ListItem >
                         <Text>{this.state.Kulkas}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text style={styles.text}>Air</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datafiturkos.Air}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text style={styles.text}>Listrik</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datafiturkos.Listrik}</Text>
                     </ListItem>
                     <Card>
                         <CardItem>
@@ -161,19 +161,64 @@ export default class fiturkosdetail extends Component {
                         { text: 'Batal', style: 'cancel' },
                         {
                             text: 'YA', onPress: () => {
-                                return fetch("https://kosannarutosasuke.herokuapp.com/api/fiturkos/" + this.state.datafiturkos._id + "?token=" + this.state.webtoken, {
-                                    method: "DELETE"
+                                fetch("https://kosannarutosasuke.herokuapp.com/api/fiturkos/" + this.state.datafiturkos._id + "?token=" + this.state.webtoken, {
+                                    method: "GET"
                                 })
+                                    //promise
                                     .then((response) => response.json())
-                                    .then(
-                                    Alert.alert(
-                                        'Delete Data fiturkos',
-                                        'Delete Sukses',
-                                        [
-                                            { text: 'OK', onPress: () => this.props.navigation.navigate('Fiturkos') },
-                                        ]
-                                    )
-                                    )
+                                    .then((data) => {
+                                        let a = Number(data.Internet) + Number(data.Listrik) + Number(data.Air)
+                                        if (data.TV == true) {
+                                            a = a + 100000;
+                                        }
+                                        if (data.Kulkas == true) {
+                                            a = a + 100000;
+                                        }
+                                        if (data.KamarMandi == "Dalam") {
+                                            a = a + 100000;
+                                        }
+                                        //console.log(data.KdKos)
+                                        fetch("https://kosannarutosasuke.herokuapp.com/api/kos/kode/" + data.KdKos + "?token=" + this.state.webtoken, {
+                                            method: "GET"
+                                        })
+                                            //promise
+                                            .then((response) => response.json())
+                                            .then((data) => {
+                                                let Hasil = 0;
+                                                Hasil = Number(data[0].Pendapatan) + a;
+                                                console.log(Hasil);
+                                                fetch("https://kosannarutosasuke.herokuapp.com/api/kos/" + data[0]._id + "?token=" + this.state.webtoken, {
+                                                    method: 'PUT',
+                                                    headers: {
+                                                        'Accept': 'application/json',
+                                                        'Content-Type': 'application/json',
+                                                    },
+                                                    body: JSON.stringify({
+                                                        Pendapatan: Hasil,
+                                                    })
+                                                })
+                                            })
+                                            .catch((error) => {
+                                                console.log(error);
+                                            })
+                                        fetch("https://kosannarutosasuke.herokuapp.com/api/fiturkos/" + this.state.datafiturkos._id + "?token=" + this.state.webtoken, {
+                                            method: "DELETE"
+                                        })
+                                            .then((response) => response.json())
+                                            .then(
+                                            Alert.alert(
+                                                'Delete Data fiturkos',
+                                                'Delete Sukses',
+                                                [
+                                                    { text: 'OK', onPress: () => this.props.navigation.navigate('Fiturkos') },
+                                                ]
+                                            )
+                                            )
+
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
                             }
                         }
                     ]

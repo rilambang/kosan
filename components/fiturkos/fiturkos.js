@@ -43,7 +43,7 @@ export default class Fiturkos extends Component {
 
           })
           .catch((error) => {
-            //console.log(error);
+            console.log(error);
           })
       }
       else if (error) {
