@@ -1,7 +1,7 @@
 import React from "react";
 import { AppRegistry, Image,Alert, StatusBar, AsyncStorage } from "react-native";
 import { Container, Content, Text, List, ListItem, Button } from "native-base";
-const routes = ["Content", "Penjaga", "Kos"];
+const routes = ["Content", "Penjaga", "Kos", "GajiPenjaga","Fiturkos"];
 export default class Side extends React.Component {
     constructor() {
         super()

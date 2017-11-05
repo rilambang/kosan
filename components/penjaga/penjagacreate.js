@@ -142,7 +142,7 @@ export default class PenjagaCreate extends Component {
                     .then(response => response.json())
                     .then(
                     Alert.alert(
-                        "Create Provinsoi",
+                        "Tambah Penjaga",
                         "Sukses",
                         [
                             { text: "OK", onPress: () => this.props.navigation.navigate('Penjaga') },

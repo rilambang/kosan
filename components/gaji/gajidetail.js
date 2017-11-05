@@ -6,13 +6,13 @@ import {
     Item, Tab, Tabs, Footer, FooterTab, Label, List, ListItem
 } from "native-base";
 
-export default class Penjagadetail extends Component {
+export default class Gajidetail extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            datapenjaga: "",
-            idpenjaga: this.props.navigation.state.params.idpenjaga
+            datagaji: "",
+            idgaji: this.props.navigation.state.params.idgaji
         }
     }
 
@@ -23,16 +23,16 @@ export default class Penjagadetail extends Component {
                     webtoken: result
                 });
                 console.log(this.state.webtoken)
-                fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/" + this.state.idpenjaga + "?token=" + this.state.webtoken, {
+                fetch("https://kosannarutosasuke.herokuapp.com/api/GajiPenjaga/" + this.state.idgaji + "?token=" + this.state.webtoken, {
                     method: "GET"
                 })
 
                     .then((response) => response.json())
                     .then((data) => {
                         this.setState({
-                            datapenjaga: data
+                            datagaji: data
                         });
-                        console.log(this.state.datapenjaga);
+                        console.log(this.state.datagaji);
 
                     })
                     .catch((error) => {
@@ -52,72 +52,38 @@ export default class Penjagadetail extends Component {
                     <Left>
                         <Button
                             transparent
-                            onPress={() => this.props.navigation.navigate("Penjaga")}>
+                            onPress={() => this.props.navigation.navigate("Gaji")}>
                             <Icon name="arrow-back" />
                         </Button>
                     </Left>
                     <Body>
-                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>DETAILPenjaga</Text>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>DETAILGaji</Text>
                     </Body>
                     <Right>
                     </Right>
                 </Header>
                 <Content padder>
                     <Separator bordered>
-                        <Text  style={styles.text}>Kode Penjaga</Text>
+                        <Text style={styles.text}>Kategori Kos</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.KdPenjaga}</Text>
+                        <Text>{this.state.datagaji.KategoriKos}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text  style={styles.text}>Kode Kos</Text>
+                        <Text style={styles.text}>Kode Kos</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.KdKos}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text  style={styles.text}>Nama Penjaga</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datapenjaga.NamaPenjaga}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text  style={styles.text}>Jenis Kelamin</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datapenjaga.JenisKelamin}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text  style={styles.text}>Kategori Kos</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datapenjaga.KategoriKos}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text  style={styles.text}>No. Handphone</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datapenjaga.NoHp}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text  style={styles.text}>Alamat</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datapenjaga.Alamat}</Text>
+                        <Text>{this.state.datagaji.Gaji}</Text>
                     </ListItem>
                     <Card>
                         <CardItem>
                             <Left>
-                                <Button rounded info onPress={() => this.props.navigation.navigate("Penjagaedit", { idpenjaga: this.state.datapenjaga._id })} key={this.state.datapenjaga._id}>
+                                <Button rounded info onPress={() => this.props.navigation.navigate("Gajiedit", { idgaji: this.state.datagaji._id })} key={this.state.datagaji._id}>
                                     <Icon name="color-filter" />
                                     <Text>Edit</Text>
                                 </Button>
                             </Left>
                             <Right>
-                                <Button rounded danger onPress={this.Deletepenjaga}>
-                                    <Icon name="trash" />
-                                    <Text>Delete</Text>
-                                </Button>
                             </Right>
                         </CardItem>
                     </Card>
@@ -126,7 +92,7 @@ export default class Penjagadetail extends Component {
         )
     }
 
-    Deletepenjaga = () => {
+    Deletegaji = () => {
         AsyncStorage.getItem('data', (error, result) => {
             if (result) {
                 this.setState({
@@ -134,22 +100,22 @@ export default class Penjagadetail extends Component {
                 });
                 console.log(this.state.webtoken)
                 Alert.alert(
-                    'Hapus Data penjaga',
-                    'Yakin?',
+                    'Hapus Gaji Penjaga',
+                    'Anda yakin ingin menghapus gaji penjaga ini?',
                     [
-                        { text: 'Batal', style: 'cancel' },
+                        { text: 'Cancel', style: 'cancel' },
                         {
-                            text: 'YA', onPress: () => {
-                                return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/" + this.state.datapenjaga._id + "?token=" + this.state.webtoken, {
+                            text: 'OK', onPress: () => {
+                                return fetch("https://kosannarutosasuke.herokuapp.com/api/GajiPenjaga/" + this.state.datagaji._id + "?token=" + this.state.webtoken, {
                                     method: "DELETE"
                                 })
                                     .then((response) => response.json())
                                     .then(
                                     Alert.alert(
-                                        'Hapus Data penjaga',
-                                        'Berhasil Terhapus',
+                                        'Hapus Data Gaji Penjaga',
+                                        'Data Berhasil Terhapus',
                                         [
-                                            { text: 'OK', onPress: () => this.props.navigation.navigate('Penjaga') },
+                                            { text: 'OK', onPress: () => this.props.navigation.navigate('Gaji') },
                                         ]
                                     )
                                     )

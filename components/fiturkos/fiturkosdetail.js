@@ -6,13 +6,15 @@ import {
     Item, Tab, Tabs, Footer, FooterTab, Label, List, ListItem
 } from "native-base";
 
-export default class Penjagadetail extends Component {
+export default class fiturkosdetail extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            datapenjaga: "",
-            idpenjaga: this.props.navigation.state.params.idpenjaga
+            datafiturkos: "",
+            TV: "",
+            Kulkas:"",
+            idfiturkos: this.props.navigation.state.params.idfiturkos
         }
     }
 
@@ -23,16 +25,34 @@ export default class Penjagadetail extends Component {
                     webtoken: result
                 });
                 console.log(this.state.webtoken)
-                fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/" + this.state.idpenjaga + "?token=" + this.state.webtoken, {
+                fetch("https://kosannarutosasuke.herokuapp.com/api/fiturkos/" + this.state.idfiturkos + "?token=" + this.state.webtoken, {
                     method: "GET"
                 })
 
                     .then((response) => response.json())
                     .then((data) => {
                         this.setState({
-                            datapenjaga: data
+                            datafiturkos: data,
                         });
-                        console.log(this.state.datapenjaga);
+                        //console.log(this.state.datafiturkos.TV)
+                        if (this.state.datafiturkos.TV == false) {
+                            this.setState({
+                                TV: "Tidak Ada"
+                            });
+                        } else {
+                            this.setState({
+                                TV: "Ada"
+                            });
+                        }
+                        if (this.state.datafiturkos.Kulkas == false) {
+                            this.setState({
+                                Kulkas: "Tidak Ada"
+                            });
+                        } else {
+                            this.setState({
+                                Kulkas: "Ada"
+                            });
+                        }
 
                     })
                     .catch((error) => {
@@ -42,6 +62,7 @@ export default class Penjagadetail extends Component {
             else if (error) {
                 console.log('eror' + error)
             }
+
         })
 
     }
@@ -52,69 +73,69 @@ export default class Penjagadetail extends Component {
                     <Left>
                         <Button
                             transparent
-                            onPress={() => this.props.navigation.navigate("Penjaga")}>
+                            onPress={() => this.props.navigation.navigate("Fiturkos")}>
                             <Icon name="arrow-back" />
                         </Button>
                     </Left>
                     <Body>
-                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>DETAILPenjaga</Text>
+                        <Text style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }}>DETAILFiturkos</Text>
                     </Body>
                     <Right>
                     </Right>
                 </Header>
                 <Content padder>
                     <Separator bordered>
-                        <Text  style={styles.text}>Kode Penjaga</Text>
+                        <Text style={styles.text}>Kode Kos</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.KdPenjaga}</Text>
+                        <Text>{this.state.datafiturkos.KdKos}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text  style={styles.text}>Kode Kos</Text>
+                        <Text style={styles.text}>Internet</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.KdKos}</Text>
+                        <Text>{this.state.datafiturkos.Internet}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text  style={styles.text}>Nama Penjaga</Text>
+                        <Text style={styles.text}>Kamar Mandi</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.NamaPenjaga}</Text>
+                        <Text>{this.state.datafiturkos.KamarMandi}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text  style={styles.text}>Jenis Kelamin</Text>
+                        <Text style={styles.text}>TV</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.JenisKelamin}</Text>
+                        <Text>{this.state.TV}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text  style={styles.text}>Kategori Kos</Text>
+                        <Text style={styles.text}>Kulkas</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.KategoriKos}</Text>
+                        <Text>{this.state.Kulkas}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text  style={styles.text}>No. Handphone</Text>
+                        <Text style={styles.text}>Air</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.NoHp}</Text>
+                        <Text>{this.state.datafiturkos.Air}</Text>
                     </ListItem>
                     <Separator bordered>
-                        <Text  style={styles.text}>Alamat</Text>
+                        <Text style={styles.text}>Listrik</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datapenjaga.Alamat}</Text>
+                        <Text>{this.state.datafiturkos.Listrik}</Text>
                     </ListItem>
                     <Card>
                         <CardItem>
                             <Left>
-                                <Button rounded info onPress={() => this.props.navigation.navigate("Penjagaedit", { idpenjaga: this.state.datapenjaga._id })} key={this.state.datapenjaga._id}>
+                                <Button rounded info onPress={() => this.props.navigation.navigate("Fiturkosedit", { idfiturkos: this.state.datafiturkos._id })} key={this.state.datafiturkos._id}>
                                     <Icon name="color-filter" />
                                     <Text>Edit</Text>
                                 </Button>
                             </Left>
                             <Right>
-                                <Button rounded danger onPress={this.Deletepenjaga}>
+                                <Button rounded danger onPress={this.Deletefiturkos}>
                                     <Icon name="trash" />
                                     <Text>Delete</Text>
                                 </Button>
@@ -126,7 +147,7 @@ export default class Penjagadetail extends Component {
         )
     }
 
-    Deletepenjaga = () => {
+    Deletefiturkos = () => {
         AsyncStorage.getItem('data', (error, result) => {
             if (result) {
                 this.setState({
@@ -134,22 +155,22 @@ export default class Penjagadetail extends Component {
                 });
                 console.log(this.state.webtoken)
                 Alert.alert(
-                    'Hapus Data penjaga',
+                    'Delete Data fiturkos',
                     'Yakin?',
                     [
                         { text: 'Batal', style: 'cancel' },
                         {
                             text: 'YA', onPress: () => {
-                                return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/" + this.state.datapenjaga._id + "?token=" + this.state.webtoken, {
+                                return fetch("https://kosannarutosasuke.herokuapp.com/api/fiturkos/" + this.state.datafiturkos._id + "?token=" + this.state.webtoken, {
                                     method: "DELETE"
                                 })
                                     .then((response) => response.json())
                                     .then(
                                     Alert.alert(
-                                        'Hapus Data penjaga',
-                                        'Berhasil Terhapus',
+                                        'Delete Data fiturkos',
+                                        'Delete Sukses',
                                         [
-                                            { text: 'OK', onPress: () => this.props.navigation.navigate('Penjaga') },
+                                            { text: 'OK', onPress: () => this.props.navigation.navigate('Fiturkos') },
                                         ]
                                     )
                                     )

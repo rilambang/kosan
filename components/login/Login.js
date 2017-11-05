@@ -30,7 +30,7 @@ export default class HomeLogin extends Component {
           <Image
              style = {styles.logo}
              source={require('../../assets/images/logo.png')} />
-          {/*<Text style={styles.titleApp}>Kosan Kita</Text>*/}
+          {/*<Text style={styles.titleApp}>@RUDIAnton</Text>*/}
         </View>
         <KeyboardAvoidingView behavior="padding" style={styles.containerkey}>
           <StatusBar
