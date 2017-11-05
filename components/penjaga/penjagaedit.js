@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Picker, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup, Item,
     Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -89,19 +89,28 @@ export default class penjagaedit extends Component {
                                     <View >
                                         <H1>Data penjaga{"\n"}</H1>
                                         <Text style={{ fontSize: 20 }}>Kode Penjaga </Text>
-                                        <TextInput defaultValue={this.state.datapenjaga.KdPenjaga} onChangeText={this.handleKdPenjaga}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datapenjaga.KdPenjaga} onChangeText={this.handleKdPenjaga}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput defaultValue={this.state.datapenjaga.KdKos} onChangeText={this.handleKdKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datapenjaga.KdKos} onChangeText={this.handleKdKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Nama penjaga </Text>
-                                        <TextInput defaultValue={this.state.datapenjaga.NamaPenjaga} onChangeText={this.handleNamaPenjaga}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>Jenis Kelamin </Text>
-                                        <TextInput defaultValue={this.state.datapenjaga.JenisKelamin} onChangeText={this.handleJenisKelamin}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datapenjaga.NamaPenjaga} onChangeText={this.handleNamaPenjaga}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Alamat </Text>
-                                        <TextInput defaultValue={this.state.datapenjaga.Alamat} onChangeText={this.handleAlamat}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datapenjaga.Alamat} onChangeText={this.handleAlamat}></TextInput>
                                         <Text style={{ fontSize: 20 }}>No Hp </Text>
-                                        <TextInput defaultValue={this.state.datapenjaga.NoHp} onChangeText={this.handleNoHp}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datapenjaga.NoHp} onChangeText={this.handleNoHp}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kategori Kos </Text>
-                                        <TextInput defaultValue={this.state.datapenjaga.KategoriKos} onChangeText={this.handleKategoriKos}></TextInput>
+                                        <Picker selectedValue={this.state.KategoriKos} onValueChange={this.handleKategoriKos}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Kelas1" value="Kelas1" />
+                                            <Picker.Item label="Kelas2" value="Kelas2" />
+                                            <Picker.Item label="Kelas3" value="Kelas3" />
+                                        </Picker>
+                                        <Text style={{ fontSize: 20 }}>Jenis Kelamin </Text>
+                                        <Picker selectedValue={this.state.JenisKelamin} onValueChange={this.handleJenisKelamin}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Laki-laki" value="Laki-laki" />
+                                            <Picker.Item label="Perempuan" value="Perempuan" />
+                                        </Picker>
                                         <Text>{"\n"}</Text>
                                         <Button primary onPress={this.editpenjaga}><Text>Update</Text></Button>
                                     </View>
@@ -133,32 +142,77 @@ export default class penjagaedit extends Component {
                         webtoken: result
                     });
                     console.log(this.state.webtoken)
-                    return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/" + this.state.idpenjaga + "?token=" + this.state.webtoken, {
-                        method: 'PUT',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            KdPenjaga: this.state.KdPenjaga,
-                            KdKos: this.state.KdKos,
-                            NamaPenjaga: this.state.NamaPenjaga,
-                            Alamat: this.state.Alamat,
-                            NoHp: this.state.NoHp,
-                            JenisKelamin: this.state.JenisKelamin,
-                            KategoriKos: this.state.KategoriKos,
-                        })
+                    fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/kode/" + this.state.KdPenjaga + "?token=" + this.state.webtoken, {
+                        method: "GET",
                     })
-                        .then(response => response.json())
-                        .then(
-                        Alert.alert(
-                            "Edit Data penjaga",
-                            "Suksess",
-                            [
-                                { text: "OK", onPress: () => this.props.navigation.navigate('Penjagadetail', { idpenjaga: this.state.datapenjaga._id }) },
-                            ]
-                        )
-                        )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data[0].KdPenjaga)
+                            if (data == "" || data[0].KdPenjaga == this.state.KdPenjaga) {
+                                fetch("https://kosannarutosasuke.herokuapp.com/api/kos/kode/" + this.state.KdKos + "?token=" + this.state.webtoken, {
+                                    method: "GET"
+                                })
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                        console.log(data);
+                                        if (data != "") {
+                                            fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
+                                                method: 'POST',
+
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    KdKos: this.state.KdKos,
+                                                    Alamat: this.state.Alamat,
+                                                    NoHp: this.state.NoHp,
+                                                    KdPenjaga: this.state.KdPenjaga,
+                                                    JenisKelamin: this.state.JenisKelamin,
+                                                    KategoriKos: this.state.KategoriKos,
+                                                    NamaPenjaga: this.state.NamaPenjaga,
+                                                })
+                                            })
+                                                .then(response => response.json())
+                                                .then(
+                                                Alert.alert(
+                                                    "Edit Penjaga",
+                                                    "Sukses",
+                                                    [
+                                                        { text: "OK", onPress: () => this.props.navigation.navigate('Penjaga') },
+                                                    ]
+                                                )
+                                                )
+                                        } else {
+                                            Alert.alert(
+                                                "Edit Penjaga",
+                                                "Kode Kos Tidak Tersedia",
+                                                [
+                                                    { text: "OK" },
+                                                ]
+                                            )
+                                        }
+
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
+
+                            }
+                            else {
+                                Alert.alert(
+                                    "Edit Penjaga",
+                                    "Kode Penjaga Sudah Ada",
+                                    [
+                                        { text: "OK" },
+                                    ]
+                                )
+                            }
+
+                        })
+                        .catch((error) => {
+                            //console.log(error);
+                        })
                 }
                 else if (error) {
                     console.log('eror' + error)

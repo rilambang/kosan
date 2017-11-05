@@ -10,6 +10,7 @@ export default class PenjagaCreate extends Component {
     constructor() {
         super()
         this.state = {
+            datakos: [],
             KdPenjaga: "",
             KdKos: "",
             NamaPenjaga: "",
@@ -101,17 +102,74 @@ export default class PenjagaCreate extends Component {
                         webtoken: result
                     });
                     console.log(this.state.webtoken)
-                    fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
+                    fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga/kode/" + this.state.KdPenjaga + "?token=" + this.state.webtoken, {
                         method: "GET",
                     })
                         .then((response) => response.json())
                         .then((data) => {
-                            this.setState({
-                                dataPenjaga: data
-                            });
-                            //debugger;
-                            //console.log(this.state.dataPenjaga);
-                            //console.log(this.state.dataDokter[0].NamaDokter);
+                            // this.setState({
+                            //     dataPenjaga: data
+                            // });
+                            if (data == "") {
+                                fetch("https://kosannarutosasuke.herokuapp.com/api/kos/kode/" + this.state.KdKos + "?token=" + this.state.webtoken, {
+                                    method: "GET"
+                                })
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                        console.log(data);
+                                        if (data != "") {
+                                            fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
+                                                method: 'POST',
+
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    KdKos: this.state.KdKos,
+                                                    Alamat: this.state.Alamat,
+                                                    NoHp: this.state.NoHp,
+                                                    KdPenjaga: this.state.KdPenjaga,
+                                                    JenisKelamin: this.state.JenisKelamin,
+                                                    KategoriKos: this.state.KategoriKos,
+                                                    NamaPenjaga: this.state.NamaPenjaga,
+                                                })
+                                            })
+                                                .then(response => response.json())
+                                                .then(
+                                                Alert.alert(
+                                                    "Tambah Penjaga",
+                                                    "Sukses",
+                                                    [
+                                                        { text: "OK", onPress: () => this.props.navigation.navigate('Penjaga') },
+                                                    ]
+                                                )
+                                                )
+                                        } else {
+                                            Alert.alert(
+                                                "Tambah Penjaga",
+                                                "Kode Kos Tidak Tersedia",
+                                                [
+                                                    { text: "OK" },
+                                                ]
+                                            )
+                                        }
+
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
+
+                            }
+                            else {
+                                Alert.alert(
+                                    "Tambah Penjaga",
+                                    "Kode Penjaga Sudah Ada",
+                                    [
+                                        { text: "OK" },
+                                    ]
+                                )
+                            }
 
                         })
                         .catch((error) => {
@@ -121,34 +179,6 @@ export default class PenjagaCreate extends Component {
                 else if (error) {
                     console.log('eror' + error)
                 }
-
-                return fetch("https://kosannarutosasuke.herokuapp.com/api/penjaga?token=" + this.state.webtoken, {
-                    method: 'POST',
-
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        KdKos: this.state.KdKos,
-                        Alamat: this.state.Alamat,
-                        NoHp: this.state.NoHp,
-                        KdPenjaga: this.state.KdPenjaga,
-                        JenisKelamin: this.state.JenisKelamin,
-                        KategoriKos: this.state.KategoriKos,
-                        NamaPenjaga: this.state.NamaPenjaga,
-                    })
-                })
-                    .then(response => response.json())
-                    .then(
-                    Alert.alert(
-                        "Create Provinsoi",
-                        "Sukses",
-                        [
-                            { text: "OK", onPress: () => this.props.navigation.navigate('Penjaga') },
-                        ]
-                    )
-                    )
             })
         }
     }
@@ -181,7 +211,8 @@ export default class PenjagaCreate extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flexGrow: 1,
         marginTop: 25,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#ffffff'
     }
 })
