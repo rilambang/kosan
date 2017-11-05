@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, Picker, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup, Item,
     Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -92,7 +92,12 @@ export default class kosedit extends Component {
                                         <Text style={{ fontSize: 20 }}>Nama Kos </Text>
                                         <TextInput defaultValue={this.state.datakos.NamaKos} onChangeText={this.handleNamaKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kategori Kos </Text>
-                                        <TextInput defaultValue={this.state.datakos.KategoriKos} onChangeText={this.handleKategoriKos}></TextInput>
+                                        <Picker selectedValue={this.state.datakos.KategoriKos} onValueChange={this.handleKategoriKos}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Elite" value="Kelas1" />
+                                            <Picker.Item label="Menengah" value="Kelas2" />
+                                            <Picker.Item label="Ekonomis" value="Kelas3" />
+                                        </Picker>
                                         <Text style={{ fontSize: 20 }}>Lokasi </Text>
                                         <TextInput defaultValue={this.state.datakos.Location} onChangeText={this.handleLocation}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Jumlah Kamar </Text>
@@ -172,11 +177,11 @@ export default class kosedit extends Component {
     handleKategoriKos = (text) => {
         this.setState({ KategoriKos: text })
     }
-    handleJmlKamar = (text) => {
-        this.setState({ JmlKamar: text })
+    handleJmlKamar = (number) => {
+        this.setState({ JmlKamar: number })
     }
-    handlePendapatan = (text) => {
-        this.setState({ Pendapatan: text })
+    handlePendapatan = (number) => {
+        this.setState({ Pendapatan: number })
     }
 
 }
