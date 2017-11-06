@@ -79,8 +79,7 @@ export default class gajiedit extends Component {
 
                                     <View >
                                         <H1>Data Gaji Penjaga{"\n"}</H1>
-                                        <Text style={{ fontSize: 20 }}>Kategori Kos </Text>
-                                        <TextInput defaultValue={this.state.datagaji.KategoriKos} onChangeText={this.handleKategoriKos}></TextInput>
+                                        <Text style={{ fontSize: 20 }}>Kategori Kos {this.state.datagaji.KategoriKos}</Text>
                                         <Text style={{ fontSize: 20 }}>Gaji </Text>
                                         <TextInput
                                             style={{ marginRight: -100 }}
