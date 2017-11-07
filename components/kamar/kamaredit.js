@@ -14,7 +14,7 @@ export default class kamaredit extends Component {
             idkamar: this.props.navigation.state.params.idkamar,
             datakamar: "",
             KdKos: "",
-            KdKamarKos:"",
+            KdKamarKos: "",
             AC: "",
             CuciPakaian: "",
             Tagihan: "",
@@ -91,11 +91,19 @@ export default class kamaredit extends Component {
                                         <Text style={{ fontSize: 20 }}>Kode Kamar Kos </Text>
                                         <TextInput defaultValue={this.state.datakamar.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>AC </Text>
-                                        <TextInput defaultValue={this.state.datakamar.AC} onChangeText={this.handleAC}></TextInput>
+                                        <Picker selectedValue={this.state.datakos.AC} onValueChange={this.handleAC}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Ada" value="true" />
+                                            <Picker.Item label="Tidak" value="false" />
+                                        </Picker>
                                         <Text style={{ fontSize: 20 }}>Cuci Pakaian </Text>
-                                        <TextInput defaultValue={this.state.datakamar.CuciPakaian} onChangeText={this.handleCuciPakaian}></TextInput>
+                                        <Picker selectedValue={this.state.datakos.CuciPakaian} onValueChange={this.handleCuciPakaian}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Ya" value="true" />
+                                            <Picker.Item label="Tidak" value="false" />
+                                        </Picker>
                                         <Text style={{ fontSize: 20 }}>Tagihan </Text>
-                                        <TextInput defaultValue={this.state.datakamar.Tagihan} onChangeText={this.handleTagihan}></TextInput>
+                                        <TextInput defaultValue={this.state.datakamar.Tagihan} keyboardType='numeric' onChangeText={this.handleTagihan}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Bukti Tagihan </Text>
                                         <TextInput defaultValue={this.state.datakamar.BuktiTagihan} onChangeText={this.handleBuktiTagihan}></TextInput>
                                         <Text>{"\n"}</Text>
@@ -142,7 +150,7 @@ export default class kamaredit extends Component {
                             Tagihan: this.state.Tagihan,
                             BuktiTagihan: this.state.BuktiTagihan,
                             CuciPakaian: this.state.CuciPakaian,
-                            
+
                         })
                     })
                         .then(response => response.json())

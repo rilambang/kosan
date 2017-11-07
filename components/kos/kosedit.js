@@ -101,7 +101,7 @@ export default class kosedit extends Component {
                                         <Text style={{ fontSize: 20 }}>Lokasi </Text>
                                         <TextInput defaultValue={this.state.datakos.Location} onChangeText={this.handleLocation}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Jumlah Kamar </Text>
-                                        <TextInput defaultValue={this.state.datakos.JmlKamar} onChangeText={this.handleJmlKamar}></TextInput>
+                                        <TextInput defaultValue={this.state.datakos.JmlKamar} keyboardType='numeric' onChangeText={this.handleJmlKamar}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Pendapatan </Text>
                                         <TextInput defaultValue={this.state.datakos.Pendapatan} editable={false} onChangeText={this.handlePendapatan}></TextInput>
                                         <Text>{"\n"}</Text>

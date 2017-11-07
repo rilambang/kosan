@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, DatePickerIOS, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup, Item,
     Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -63,6 +63,8 @@ export default class penghuniedit extends Component {
 
 
     render() {
+        let datestring= new Date(this.state.TGLKos);
+            console.log(datestring);
         return (
             <Container style={styles.container}>
                 <Header style={{ backgroundColor: "#1b1b2b" }}>
@@ -92,10 +94,10 @@ export default class penghuniedit extends Component {
                                         <TextInput defaultValue={this.state.datapenghuni.KdKos} onChangeText={this.handleKdKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kode Kamar Kos </Text>
                                         <TextInput defaultValue={this.state.datapenghuni.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>Nama penghuni </Text>
+                                        <Text style={{ fontSize: 20 }}>Nama Penghuni </Text>
                                         <TextInput defaultValue={this.state.datapenghuni.NamaPenghuni} onChangeText={this.handleNamaPenghuni}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Tanggal Kos </Text>
-                                        <TextInput defaultValue={this.state.datapenghuni.TGLKos} onChangeText={this.handleTGLKos}></TextInput>
+                                        <DatePickerIOS date={datestring} mode="date" onDateChange={this.handleTGLKos}></DatePickerIOS>
                                         <Text style={{ fontSize: 20 }}>No KTP </Text>
                                         <TextInput defaultValue={this.state.datapenghuni.NoKTP} onChangeText={this.handleNoKTP}></TextInput>
                                         <Text style={{ fontSize: 20 }}>No Hp </Text>
@@ -182,8 +184,8 @@ export default class penghuniedit extends Component {
     handleNoHP = (text) => {
         this.setState({ NoHP: text })
     }
-    handleTGLKos = (text) => {
-        this.setState({ TGLKos: text })
+    handleTGLKos = (date) => {
+        this.setState({ TGLKos: date })
     }
     handleNamaBank = (text) => {
         this.setState({ NamaBank: text })

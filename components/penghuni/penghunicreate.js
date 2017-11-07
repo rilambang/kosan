@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View, AsyncStorage, Picker, PickerItem, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, AsyncStorage, Picker, DatePickerIOS, PickerItem, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup,
     Item, Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -17,10 +17,12 @@ export default class PenghuniCreate extends Component {
             NoKTP: "",
             NoHP: "",
             NamaBank: "",
+            
         }
     }
 
     render() {
+        let datestring= new Date(this.state.TGLKos);
         return (
             <Container style={styles.container}>
                 <Header style={{ backgroundColor: "#1b1b2b" }}>
@@ -48,16 +50,17 @@ export default class PenghuniCreate extends Component {
                                         <H1>Data penghuni{"\n"}</H1>
                                         <Text style={{ fontSize: 20 }}>Kode Kos </Text>
                                         <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>Kode Kos </Text>
+                                        <Text style={{ fontSize: 20 }}>Kode Kamar Kos </Text>
                                         <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Nama Penghuni </Text>
                                         <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NamaPenghuni} onChangeText={this.handleNamaPenghuni}></TextInput>
                                         <Text style={{ fontSize: 20 }}>TGLKos </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.TGLKos} onChangeText={this.handleTGLKos}></TextInput>
+                                       
+                                        <DatePickerIOS date={datestring} mode="date" onDateChange={this.handleTGLKos}></DatePickerIOS>
                                         <Text style={{ fontSize: 20 }}>No KTP </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NoKTP} onChangeText={this.handleNoKTP}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} keyboardType='numeric' defaultValue={this.state.NoKTP} onChangeText={this.handleNoKTP}></TextInput>
                                         <Text style={{ fontSize: 20 }}>No HP </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NoHP} onChangeText={this.handleNoHP}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} keyboardType='numeric' defaultValue={this.state.NoHP} onChangeText={this.handleNoHP}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Nama Bank </Text>
                                         <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NamaBank} onChangeText={this.handleNamaBank}></TextInput>
                                         <Text>{"\n"}</Text>
@@ -154,8 +157,8 @@ export default class PenghuniCreate extends Component {
     handleNamaPenghuni = (text) => {
         this.setState({ NamaPenghuni: text })
     }
-    handleTGLKos = (text) => {
-        this.setState({ TGLKos: text })
+    handleTGLKos = (date) => {
+        this.setState({ TGLKos: date })
     }
     handleNoKTP = (text) => {
         this.setState({ NoKTP: text })

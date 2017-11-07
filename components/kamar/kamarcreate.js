@@ -63,7 +63,7 @@ export default class KamarCreate extends Component {
                                             <Picker.Item label="Tidak" value="false" />
                                         </Picker>
                                         <Text style={{ fontSize: 20 }}>Tagihan </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.Tagihan} onChangeText={this.handleTagihan}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} keyboardType='numeric' defaultValue={this.state.Tagihan} onChangeText={this.handleTagihan}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Bukti Tagihan </Text>
                                         <TextInput style={{ marginRight: -100 }} defaultValue={this.state.BuktiTagihan} onChangeText={this.handleBuktiTagihan}></TextInput>
                                         <Text>{"\n"}</Text>
