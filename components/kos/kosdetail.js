@@ -46,6 +46,14 @@ export default class Kosdetail extends Component {
 
     }
     render() {
+        let KategoriKosString=""+this.state.datakos.KategoriKos;
+        if(KategoriKosString=="Kelas1"){
+            KategoriKosString="Elite";
+        } else if(KategoriKosString=="Kelas2"){
+            KategoriKosString="Menengah";
+        } else if(KategoriKosString=="Kelas3"){
+            KategoriKosString="Ekonomis";
+        }
         return (
             <Container style={styles.container}>
                 <Header style={{ backgroundColor: "#1b1b2b" }}>
@@ -79,19 +87,13 @@ export default class Kosdetail extends Component {
                         <Text  style={styles.text}>Kategori Kos</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datakos.KategoriKos}</Text>
+                        <Text>{KategoriKosString}</Text>
                     </ListItem>
                     <Separator bordered>
                         <Text  style={styles.text}>Jumlah Kamar</Text>
                     </Separator>
                     <ListItem >
                         <Text>{this.state.datakos.JmlKamar}</Text>
-                    </ListItem>
-                    <Separator bordered>
-                        <Text  style={styles.text}>Kategori Kos</Text>
-                    </Separator>
-                    <ListItem >
-                        <Text>{this.state.datakos.KategoriKos}</Text>
                     </ListItem>
                     <Separator bordered>
                         <Text  style={styles.text}>Lokasi</Text>
