@@ -46,6 +46,12 @@ export default class Kamardetail extends Component {
 
     }
     render() {
+        let ACString=""+this.state.datakamar.AC;
+        if (ACString=="true"){
+            ACString="Ada";
+        } else if(ACString=="false"){
+            ACString="Tidak Ada";
+        }
         return (
             <Container style={styles.container}>
                 <Header style={{ backgroundColor: "#1b1b2b" }}>
@@ -80,7 +86,7 @@ export default class Kamardetail extends Component {
                         <Text  style={styles.text}>AC</Text>
                     </Separator>
                     <ListItem >
-                        <Text>{this.state.datakamar.AC}</Text>
+                        <Text>{ACString}</Text>
                     </ListItem>
                     <Separator bordered>
                         <Text  style={styles.text}>Cuci Pakaian</Text>

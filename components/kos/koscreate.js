@@ -46,22 +46,22 @@ export default class KosCreate extends Component {
                                     <View >
                                         <H1>Data kos{"\n"}</H1>
                                         <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Nama Kos </Text>
-                                        <TextInput defaultValue={this.state.NamaKos} onChangeText={this.handleNamaKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NamaKos} onChangeText={this.handleNamaKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kategori Kos </Text>
-                                        <Picker selectedValue={this.state.KategoriKos} onValueChange={this.handleKategoriKos}>
+                                        <Picker style={{ marginRight: -100 }} selectedValue={this.state.KategoriKos} onValueChange={this.handleKategoriKos}>
                                             <Picker.Item label="Pilih" value="Pilih" disabled />
                                             <Picker.Item label="Elite" value="Kelas1" />
                                             <Picker.Item label="Menengah" value="Kelas2" />
                                             <Picker.Item label="Ekonomis" value="Kelas3" />
                                         </Picker>
                                        <Text style={{ fontSize: 20 }}>Lokasi </Text>
-                                        <TextInput defaultValue={this.state.Location} onChangeText={this.handleLocation}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.Location} onChangeText={this.handleLocation}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Jumlah Kamar </Text>
-                                        <TextInput defaultValue={this.state.JmlKamar} onChangeText={this.handleJmlKamar}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.JmlKamar} keyboardType='numeric' onChangeText={this.handleJmlKamar}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Pendapatan </Text>
-                                        <TextInput defaultValue={this.state.Pendapatan} editable={false} onChangeText={this.handlePendapatan}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.Pendapatan} editable={false} onChangeText={this.handlePendapatan}></TextInput>
                                         <Text>{"\n"}</Text>
                                         <Button primary onPress={this.createkos}><Text>Simpan</Text></Button>
                                     </View>
@@ -135,8 +135,7 @@ export default class KosCreate extends Component {
                     Alert.alert(
                         "Tambah Kos",
                         "Sukses",
-                        [
-                            { text: "OK", onPress: () => this.props.navigation.navigate('Kos') },
+                        [    { text: "OK", onPress: () => this.props.navigation.navigate('Kos') },
                         ]
                     )
                     )
@@ -160,7 +159,7 @@ export default class KosCreate extends Component {
         this.setState({ JmlKamar: number })
     }
     handlePendapatan = (number) => {
-        this.setState({ Pendapatan: number })
+        this.setState({ Pendapatan: number})
     }
 
 }

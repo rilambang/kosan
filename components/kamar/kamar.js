@@ -82,7 +82,7 @@ export default class Kamar extends Component {
                 <Card key={item._id}>
 
                   <Button block light onPress={() => this.props.navigation.navigate("Kamardetail", { idkamar: item._id })} >
-                    <Text >{item.KdKos}</Text>
+                    <Text >{item.KdKos} - {item.KdKamarKos}</Text>
                   </Button>
 
                 </Card>

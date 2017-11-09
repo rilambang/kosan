@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View, AsyncStorage, Picker, PickerItem, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, DatePickerIOS, AsyncStorage, Picker, PickerItem, TouchableOpacity, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup,
     Item, Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -21,6 +21,9 @@ export default class PenghuniCreate extends Component {
     }
 
     render() {
+        let datestring = new Date(this.state.TGLKos);
+        datestring.setMinutes(datestring.getMinutes() + 420);
+        let today = new Date();
         return (
             <Container style={styles.container}>
                 <Header style={{ backgroundColor: "#1b1b2b" }}>
@@ -47,19 +50,25 @@ export default class PenghuniCreate extends Component {
                                     <View >
                                         <H1>Data penghuni{"\n"}</H1>
                                         <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} style={{ marginRight: -100 }} defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
+                                        <Text style={{ fontSize: 20 }}>Kode Kamar Kos </Text>
+                                        <TextInput style={{ marginRight: -100 }} style={{ marginRight: -100 }} defaultValue={this.state.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Nama Penghuni </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NamaPenghuni} onChangeText={this.handleNamaPenghuni}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>TGLKos </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.TGLKos} onChangeText={this.handleTGLKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} style={{ marginRight: -100 }} defaultValue={this.state.NamaPenghuni} onChangeText={this.handleNamaPenghuni}></TextInput>
+                                        <Text style={{ fontSize: 20 }}>Tanggal Kos </Text>
+                                        <DatePickerIOS style={{ marginRight: -100 }} date={datestring} maximumDate={today} mode="date" onDateChange={this.handleTGLKos}></DatePickerIOS>
                                         <Text style={{ fontSize: 20 }}>No KTP </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NoKTP} onChangeText={this.handleNoKTP}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} keyboardType='numeric' style={{ marginRight: -100 }} defaultValue={this.state.NoKTP} onChangeText={this.handleNoKTP}></TextInput>
                                         <Text style={{ fontSize: 20 }}>No HP </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NoHP} onChangeText={this.handleNoHP}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} keyboardType='numeric' style={{ marginRight: -100 }} defaultValue={this.state.NoHP} onChangeText={this.handleNoHP}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Nama Bank </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.NamaBank} onChangeText={this.handleNamaBank}></TextInput>
+                                        <Picker style={{ marginRight: -100 }} selectedValue={this.state.NamaBank} onValueChange={this.handleNamaBank}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="BCA (Bank Central Asia)" value="BCA (Bank Central Asia)" />
+                                            <Picker.Item label="BNI (Bank Negara Indonesia)" value="BNI (Bank Negara Indonesia)" />
+                                            <Picker.Item label="BRI (Bank Rakyat Indonesia)" value="BRI (Bank Rakyat Indonesia)" />
+                                            <Picker.Item label="Bank Mandiri" value="Bank Mandiri" />
+                                        </Picker>
                                         <Text>{"\n"}</Text>
                                         <Button primary onPress={this.createpenghuni}><Text>Simpan</Text></Button>
                                     </View>
@@ -122,12 +131,12 @@ export default class PenghuniCreate extends Component {
                     },
                     body: JSON.stringify({
                         KdKos: this.state.KdKos,
-                        KdKamarKos:this.state.KdKamarKos,
-                        NamaPenghuni:this.state.NamaPenghuni,
-                        TGLKos:this.state.TGLKos,
+                        KdKamarKos: this.state.KdKamarKos,
+                        NamaPenghuni: this.state.NamaPenghuni,
+                        TGLKos: this.state.TGLKos,
                         NoKTP: this.state.NoKTP,
-                        NoHP:this.state.NoHP,
-                        NamaBank:this.state.NamaBank
+                        NoHP: this.state.NoHP,
+                        NamaBank: this.state.NamaBank
                     })
                 })
                     .then(response => response.json())
@@ -143,19 +152,19 @@ export default class PenghuniCreate extends Component {
             })
         }
     }
-    
+
     handleKdKos = (text) => {
         this.setState({ KdKos: text })
     }
-    
+
     handleKdKamarKos = (text) => {
-        this.setState({KdKamarKos:text})
+        this.setState({ KdKamarKos: text })
     }
     handleNamaPenghuni = (text) => {
         this.setState({ NamaPenghuni: text })
     }
-    handleTGLKos = (text) => {
-        this.setState({ TGLKos: text })
+    handleTGLKos = (date) => {
+        this.setState({ TGLKos: date })
     }
     handleNoKTP = (text) => {
         this.setState({ NoKTP: text })

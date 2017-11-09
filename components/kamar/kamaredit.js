@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
-import { View, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
+import { View, Picker, TouchableOpacity, AsyncStorage, StyleSheet, AppRegistry, StatusBar, Alert, TextInput } from 'react-native';
 import {
     Button, Text, Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Input, InputGroup, Item,
     Tab, Tabs, Footer, FooterTab, Label, List, ListItem, H1
@@ -14,7 +14,7 @@ export default class kamaredit extends Component {
             idkamar: this.props.navigation.state.params.idkamar,
             datakamar: "",
             KdKos: "",
-            KdKamarKos:"",
+            KdKamarKos: "",
             AC: "",
             CuciPakaian: "",
             Tagihan: "",
@@ -87,17 +87,24 @@ export default class kamaredit extends Component {
                                     <View >
                                         <H1>Data kamar{"\n"}</H1>
                                         <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput defaultValue={this.state.datakamar.KdKos} onChangeText={this.handleKdKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datakamar.KdKos} onChangeText={this.handleKdKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Kode Kamar Kos </Text>
-                                        <TextInput defaultValue={this.state.datakamar.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datakamar.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>AC </Text>
-                                        <TextInput defaultValue={this.state.datakamar.AC} onChangeText={this.handleAC}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>Cuci Pakaian </Text>
-                                        <TextInput defaultValue={this.state.datakamar.CuciPakaian} onChangeText={this.handleCuciPakaian}></TextInput>
+                                        <Picker style={{ marginRight: -100 }} selectedValue={this.state.AC} onValueChange={this.handleAC}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Ada" value="true" />
+                                            <Picker.Item label="Tidak" value="false" />
+                                        </Picker><Text style={{ fontSize: 20 }}>Cuci Pakaian </Text>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datakamar.CuciPakaian} keyboardType='numeric' onChangeText={this.handleCuciPakaian}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Tagihan </Text>
-                                        <TextInput defaultValue={this.state.datakamar.Tagihan} onChangeText={this.handleTagihan}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.datakamar.Tagihan} keyboardType='numeric' onChangeText={this.handleTagihan}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Bukti Tagihan </Text>
-                                        <TextInput defaultValue={this.state.datakamar.BuktiTagihan} onChangeText={this.handleBuktiTagihan}></TextInput>
+                                        <Picker style={{ marginRight: -100 }} selectedValue={this.state.BuktiTagihan} onValueChange={this.handleBuktiTagihan}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Ada" value="Ada" />
+                                            <Picker.Item label="Tidak" value="Tidak" />
+                                        </Picker>
                                         <Text>{"\n"}</Text>
                                         <Button primary onPress={this.editkamar}><Text>Update</Text></Button>
                                     </View>
@@ -142,7 +149,7 @@ export default class kamaredit extends Component {
                             Tagihan: this.state.Tagihan,
                             BuktiTagihan: this.state.BuktiTagihan,
                             CuciPakaian: this.state.CuciPakaian,
-                            
+
                         })
                     })
                         .then(response => response.json())
@@ -169,17 +176,17 @@ export default class kamaredit extends Component {
     handleKdKos = (text) => {
         this.setState({ KdKos: text })
     }
-    handleAC = (text) => {
-        this.setState({ AC: text })
+    handleAC = (boolean) => {
+        this.setState({ AC: boolean })
     }
-    handleTagihan = (text) => {
-        this.setState({ Tagihan: text })
+    handleTagihan = (number) => {
+        this.setState({ Tagihan: number })
     }
     handleBuktiTagihan = (text) => {
         this.setState({ BuktiTagihan: text })
     }
-    handleCuciPakaian = (text) => {
-        this.setState({ CuciPakaian: text })
+    handleCuciPakaian = (number) => {
+        this.setState({ CuciPakaian: number })
     }
 
 }

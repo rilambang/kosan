@@ -47,25 +47,26 @@ export default class KamarCreate extends Component {
                                     <View >
                                         <H1>Data kamar{"\n"}</H1>
                                         <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
-                                        <Text style={{ fontSize: 20 }}>Kode Kos </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} style={{ marginRight: -100 }} defaultValue={this.state.KdKos} onChangeText={this.handleKdKos}></TextInput>
+                                        <Text style={{ fontSize: 20 }}>Kode Kamar Kos </Text>
+                                        <TextInput style={{ marginRight: -100 }} style={{ marginRight: -100 }} defaultValue={this.state.KdKamarKos} onChangeText={this.handleKdKamarKos}></TextInput>
                                         <Text style={{ fontSize: 20 }}>AC </Text>
-                                        <Picker selectedValue={this.state.AC} onValueChange={this.handleAC}>
+                                        <Picker style={{ marginRight: -100 }} selectedValue={this.state.AC} onValueChange={this.handleAC}>
                                             <Picker.Item label="Pilih" value="Pilih" disabled />
                                             <Picker.Item label="Ada" value="true" />
                                             <Picker.Item label="Tidak" value="false" />
                                         </Picker>
-                                        <Text style={{ fontSize: 20 }}>Cuci Pakaian </Text>
-                                        <Picker selectedValue={this.state.CuciPakaian} onValueChange={this.handleCuciPakaian}>
-                                            <Picker.Item label="Pilih" value="Pilih" disabled />
-                                            <Picker.Item label="Ada" value="true" />
-                                            <Picker.Item label="Tidak" value="false" />
-                                        </Picker>
+                                        <Text style={{ fontSize: 20 }}>CuciPakaian </Text>
+                                        <TextInput style={{ marginRight: -100 }} style={{ marginRight: -100 }} defaultValue={this.state.CuciPakaian} keyboardType='numeric' onChangeText={this.handleCuciPakaian}></TextInput>
+
                                         <Text style={{ fontSize: 20 }}>Tagihan </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.Tagihan} onChangeText={this.handleTagihan}></TextInput>
+                                        <TextInput style={{ marginRight: -100 }} style={{ marginRight: -100 }} defaultValue={this.state.Tagihan} keyboardType='numeric' onChangeText={this.handleTagihan}></TextInput>
                                         <Text style={{ fontSize: 20 }}>Bukti Tagihan </Text>
-                                        <TextInput style={{ marginRight: -100 }} defaultValue={this.state.BuktiTagihan} onChangeText={this.handleBuktiTagihan}></TextInput>
+                                        <Picker style={{ marginRight: -100 }} selectedValue={this.state.BuktiTagihan} onValueChange={this.handleBuktiTagihan}>
+                                            <Picker.Item label="Pilih" value="Pilih" disabled />
+                                            <Picker.Item label="Ada" value="Ada" />
+                                            <Picker.Item label="Tidak" value="Tidak" />
+                                        </Picker>
                                         <Text>{"\n"}</Text>
                                         <Button primary onPress={this.createkamar}><Text>Simpan</Text></Button>
                                     </View>
@@ -155,14 +156,14 @@ export default class KamarCreate extends Component {
     handleKdKamarKos = (text) => {
         this.setState({ KdKamarKos: text })
     }
-    handleAC = (text) => {
-        this.setState({ AC: text })
+    handleAC = (boolean) => {
+        this.setState({ AC: boolean })
     }
-    handleTagihan = (text) => {
-        this.setState({ Tagihan: text })
+    handleTagihan = (number) => {
+        this.setState({ Tagihan: number })
     }
-    handleCuciPakaian = (text) => {
-        this.setState({ CuciPakaian: text })
+    handleCuciPakaian = (number) => {
+        this.setState({ CuciPakaian: number })
     }
     handleBuktiTagihan = (text) => {
         this.setState({ BuktiTagihan: text })
